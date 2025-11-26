@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Page rank &#8212; PPW</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pagerank';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Web Usage Mining" href="web_usage.html" />
+    <link rel="prev" title="Clustering data email" href="Clustering_email.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/profile.jpeg" class="logo__image only-light" alt="PPW - Home"/>
+    <script>document.write(`<img src="_static/profile.jpeg" class="logo__image only-dark" alt="PPW - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Profil
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tugas.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_menu.html">Crawling Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_PTA.html">Crawling PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawl_link.html">Crawl Link</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="crawling_berita.html">Crawling Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing Berita &amp; PTA</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="berita.html">TF-IDF &amp; Word Embedding berita</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="LDA-scit.html">LDA - Scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="klasifikasi_berita.html">Klasifikasi berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering_email.html">Clustering data email</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Page rank</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_usage.html">Web Usage Mining</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fpagerank.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/pagerank.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Page rank</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="page-rank">
+<h1>Page rank<a class="headerlink" href="#page-rank" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">csr_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># === 1️⃣ Fungsi PageRank dengan Sparse Matrix ===</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pagerank_sparse</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hitung PageRank menggunakan sparse matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Siapkan node dan mapping index ---</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">node_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>
+    <span class="n">idx_to_node</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">node_to_idx</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="c1"># --- Buat matriks transisi (sparse) ---</span>
+    <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>  <span class="c1"># in-link</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># --- Normalisasi kolom (out-degree) ---</span>
+    <span class="n">out_degree</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">out_degree</span><span class="p">[</span><span class="n">out_degree</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">out_degree</span><span class="p">)</span>
+
+    <span class="c1"># --- Inisialisasi PageRank ---</span>
+    <span class="n">pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">teleport</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">damping</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># --- Iterasi sampai konvergen ---</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Menghitung PageRank&quot;</span><span class="p">):</span>
+        <span class="n">pr_new</span> <span class="o">=</span> <span class="n">damping</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span> <span class="o">@</span> <span class="n">pr</span><span class="p">)</span> <span class="o">+</span> <span class="n">teleport</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pr_new</span> <span class="o">-</span> <span class="n">pr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Konvergen pada iterasi ke-</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">pr</span> <span class="o">=</span> <span class="n">pr_new</span>
+
+    <span class="c1"># --- Kembalikan hasil dalam bentuk dict ---</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">idx_to_node</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
+
+<span class="c1"># === 2️⃣ Baca file web-Google_10k.txt ===</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;web-Google_10k.txt&quot;</span>
+
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">source</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">parts</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">target</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Jumlah node unik: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">s</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">edges</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">[</span><span class="n">t</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">edges</span><span class="p">]))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔗 Jumlah edge: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 3️⃣ Hitung PageRank ===</span>
+<span class="n">pagerank_scores</span> <span class="o">=</span> <span class="n">pagerank_sparse</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+<span class="c1"># Simpan ke DataFrame</span>
+<span class="n">df_pagerank</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pagerank_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="s2">&quot;PageRank&quot;</span><span class="p">])</span>
+<span class="n">df_pagerank</span> <span class="o">=</span> <span class="n">df_pagerank</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;PageRank&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🏆 Top 10 Node berdasarkan PageRank:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_pagerank</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># === 4️⃣ Buat graph lengkap ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔧 Membuat graph lengkap...&quot;</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Menambahkan edges ke graph&quot;</span><span class="p">):</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Graph selesai dibuat: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s2"> node dan </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span><span class="si">}</span><span class="s2"> edge.&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 5️⃣ Visualisasi graph penuh ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎨 Membuat visualisasi (ini bisa memakan waktu lama untuk 10.000 node)...&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># Gunakan layout yang relatif cepat</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Warna dan ukuran node berdasarkan PageRank</span>
+<span class="n">node_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">pagerank_scores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+<span class="n">node_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="o">*</span> <span class="mi">100000</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node_color</span><span class="p">]</span>
+
+<span class="c1"># Gambar graph</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+    <span class="n">G</span><span class="p">,</span>
+    <span class="n">pos</span><span class="p">,</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="n">node_size</span><span class="p">,</span>
+    <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span>
+    <span class="n">arrows</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Tambahkan colorbar dengan axis yang benar</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;🌐 Visualisasi Graph Lengkap berdasarkan PageRank&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📊 Jumlah node unik: 10000
+🔗 Jumlah edge: 78323
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "5687dd3619ed4351aef11d8df60d9594", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Konvergen pada iterasi ke-57
+
+🏆 Top 10 Node berdasarkan PageRank:
+        Node  PageRank
+5187  486980  0.005070
+3160  285814  0.003439
+2561  226374  0.002460
+1903  163075  0.002413
+5945  555924  0.001946
+585    32163  0.001726
+8885  828963  0.001586
+5371  504140  0.001556
+4260  396321  0.001532
+6395  599130  0.001524
+
+🔧 Membuat graph lengkap...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9347cea375cd448080cd1889f946308f", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Graph selesai dibuat: 10000 node dan 78323 edge.
+
+🎨 Membuat visualisasi (ini bisa memakan waktu lama untuk 10.000 node)...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.12/dist-packages/IPython/core/pylabtools.py:151: UserWarning: Glyph 127760 (\N{GLOBE WITH MERIDIANS}) missing from font(s) DejaVu Sans.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="_images/93bc3991a8e508dff8dc03a1f0593106a689ee6849099d4f4e7ec02bf8739666.png" src="_images/93bc3991a8e508dff8dc03a1f0593106a689ee6849099d4f4e7ec02bf8739666.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">csr_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># === 1️⃣ Fungsi PageRank Sparse ===</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pagerank_sparse</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hitung PageRank menggunakan sparse matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Siapkan node dan mapping index ---</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]))</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">node_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>
+    <span class="n">idx_to_node</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">node_to_idx</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="c1"># --- Buat matriks transisi (sparse) ---</span>
+    <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>  <span class="c1"># in-link</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># --- Normalisasi kolom (out-degree) ---</span>
+    <span class="n">out_degree</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">out_degree</span><span class="p">[</span><span class="n">out_degree</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">out_degree</span><span class="p">)</span>
+
+    <span class="c1"># --- Inisialisasi PageRank ---</span>
+    <span class="n">pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">teleport</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">damping</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># --- Iterasi sampai konvergen ---</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Menghitung PageRank&quot;</span><span class="p">):</span>
+        <span class="n">pr_new</span> <span class="o">=</span> <span class="n">damping</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span> <span class="o">@</span> <span class="n">pr</span><span class="p">)</span> <span class="o">+</span> <span class="n">teleport</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pr_new</span> <span class="o">-</span> <span class="n">pr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Konvergen pada iterasi ke-</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">pr</span> <span class="o">=</span> <span class="n">pr_new</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="n">idx_to_node</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">pr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)}</span>
+
+<span class="c1"># === 2️⃣ Baca Dataset ===</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;semua_link_teknik.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Pastikan tidak ada nilai kosong</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Page&quot;</span><span class="p">,</span> <span class="s2">&quot;Link Keluar&quot;</span><span class="p">])</span>
+
+<span class="c1"># Buat daftar edges (source → target)</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Page&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Link Keluar&quot;</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔗 Total edges: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📄 Total unique pages: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Page&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Link Keluar&#39;</span><span class="p">])))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 3️⃣ Hitung PageRank ===</span>
+<span class="n">pagerank_scores</span> <span class="o">=</span> <span class="n">pagerank_sparse</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+<span class="c1"># Simpan ke DataFrame</span>
+<span class="n">df_pagerank</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pagerank_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Page&quot;</span><span class="p">,</span> <span class="s2">&quot;PageRank&quot;</span><span class="p">])</span>
+<span class="n">df_pagerank</span> <span class="o">=</span> <span class="n">df_pagerank</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;PageRank&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🏆 Top 10 Halaman berdasarkan PageRank:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_pagerank</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># === 4️⃣ Buat Graph Lengkap ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔧 Membuat graph lengkap...&quot;</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Menambahkan edges ke graph&quot;</span><span class="p">):</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Graph selesai dibuat: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s2"> node dan </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span><span class="si">}</span><span class="s2"> edge.&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 5️⃣ Visualisasi Graph ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎨 Membuat visualisasi graph... (bisa memakan waktu untuk dataset besar)&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># layout posisi node</span>
+
+<span class="c1"># Warna dan ukuran node berdasarkan PageRank</span>
+<span class="n">node_color</span> <span class="o">=</span> <span class="p">[</span><span class="n">pagerank_scores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+<span class="n">node_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="o">*</span> <span class="mi">5000</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node_color</span><span class="p">]</span>
+
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+    <span class="n">G</span><span class="p">,</span>
+    <span class="n">pos</span><span class="p">,</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="n">node_size</span><span class="p">,</span>
+    <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span>
+    <span class="n">arrows</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span>
+<span class="p">)</span>
+
+<span class="c1"># Tambahkan colorbar</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;🌐 Visualisasi Graph PageRank (semua link teknik)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🔗 Total edges: 5514
+📄 Total unique pages: 245
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1b4dca1050014ec2a1f799fa82e9c4a8", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Konvergen pada iterasi ke-9
+
+🏆 Top 10 Halaman berdasarkan PageRank:
+                                                  Page  PageRank
+8           http://teknik.trunojoyo.ac.id/tracer-study  0.001014
+37                     https://teknik.trunojoyo.ac.id/  0.001014
+207  https://teknik.trunojoyo.ac.id/statistik-prest...  0.001014
+206  https://teknik.trunojoyo.ac.id/sistem-informas...  0.000921
+216     https://teknik.trunojoyo.ac.id/teknik-mesin-3/  0.000921
+212  https://teknik.trunojoyo.ac.id/teknik-industri-3/  0.000921
+211   https://teknik.trunojoyo.ac.id/teknik-elektro-2/  0.000921
+215  https://teknik.trunojoyo.ac.id/teknik-mekatron...  0.000921
+213  https://teknik.trunojoyo.ac.id/teknik-informat...  0.000913
+44            https://teknik.trunojoyo.ac.id/about-us/  0.000844
+
+🔧 Membuat graph lengkap...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "0d5d746d72e84c8b94320f629ceb9b7d", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Graph selesai dibuat: 245 node dan 2664 edge.
+
+🎨 Membuat visualisasi graph... (bisa memakan waktu untuk dataset besar)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.12/dist-packages/IPython/core/pylabtools.py:151: UserWarning: Glyph 127760 (\N{GLOBE WITH MERIDIANS}) missing from font(s) DejaVu Sans.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="_images/e3697912eef03a9c8b57cb34121c4e6691f42c5fde3d1497b363e82ef4476203.png" src="_images/e3697912eef03a9c8b57cb34121c4e6691f42c5fde3d1497b363e82ef4476203.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Clustering_email.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Clustering data email</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="web_usage.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Web Usage Mining</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mukti Hendra Buana 22-071
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

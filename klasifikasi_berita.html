@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasifikasi berita &#8212; PPW</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'klasifikasi_berita';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Clustering data email" href="Clustering_email.html" />
+    <link rel="prev" title="LDA - Scikit-learn" href="LDA-scit.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/profile.jpeg" class="logo__image only-light" alt="PPW - Home"/>
+    <script>document.write(`<img src="_static/profile.jpeg" class="logo__image only-dark" alt="PPW - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Profil
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tugas.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_menu.html">Crawling Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_PTA.html">Crawling PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawl_link.html">Crawl Link</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="crawling_berita.html">Crawling Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing Berita &amp; PTA</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="berita.html">TF-IDF &amp; Word Embedding berita</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="LDA-scit.html">LDA - Scikit-learn</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Klasifikasi berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering_email.html">Clustering data email</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerank.html">Page rank</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_usage.html">Web Usage Mining</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fklasifikasi_berita.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/klasifikasi_berita.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Klasifikasi berita</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-berita">
+<h1>Klasifikasi berita<a class="headerlink" href="#klasifikasi-berita" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">LatentDirichletAllocation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSVC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+
+<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;Berita.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Preprocessing </span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;http\S+|www\S+|https\S+&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>       
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^a-zA-Z\s]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>                   
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>                  
+    
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>                              
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">]</span>  
+    <span class="n">stemmed</span> <span class="o">=</span> <span class="p">[</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>              
+    <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stemmed</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Melakukan preprocessing&quot;</span><span class="p">)</span>
+<span class="n">tqdm</span><span class="o">.</span><span class="n">pandas</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;text_clean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;berita&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="n">preprocess_text</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contoh hasil preprocessing:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;judul&#39;</span><span class="p">,</span> <span class="s1">&#39;text_clean&#39;</span><span class="p">,</span> <span class="s1">&#39;kategori&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package punkt to C:\Users\Mukti
+[nltk_data]     Hendra\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package stopwords to C:\Users\Mukti
+[nltk_data]     Hendra\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data: 1500
+   No                                              judul  \
+0   1  Airlangga Harap Kenaikan UMP Tingkatkan Daya B...   
+1   2  PT SIER Beri Penghargaan untuk 50 Tenant Terba...   
+2   3  Prabowo Bakal Bentuk Kementerian Penerimaan Ne...   
+3   4  Sinergi Kemenag &amp; BPJS Ketenagakerjaan Lindung...   
+4   5  Pemerintah Segera Bentuk Satgas PHK Usai Tetap...   
+
+                                              berita  \
+0  Menteri Koordinator (Menko) Bidang Perekonomia...   
+1  Dalam rangka memeriahkan hari jadi ke-50, PT S...   
+2  Wacana Presiden Prabowo Subianto akan membentu...   
+3  BPJS Ketenagakerjaan dan Kementerian Agama (Ke...   
+4  Pemerintah akan segera membentuk Satuan Tugas ...   
+
+                         tanggal kategori  \
+0  Minggu, 01 Des 2024 23:40 WIB  Ekonomi   
+1  Minggu, 01 Des 2024 20:45 WIB  Ekonomi   
+2  Minggu, 01 Des 2024 19:40 WIB  Ekonomi   
+3  Minggu, 01 Des 2024 19:03 WIB  Ekonomi   
+4  Minggu, 01 Des 2024 19:00 WIB  Ekonomi   
+
+                                                link  
+0  https://www.cnnindonesia.com/ekonomi/202412012...  
+1  https://www.cnnindonesia.com/ekonomi/202412012...  
+2  https://www.cnnindonesia.com/ekonomi/202412011...  
+3  https://www.cnnindonesia.com/ekonomi/202412011...  
+4  https://www.cnnindonesia.com/ekonomi/202412011...  
+ Melakukan preprocessing
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1500/1500 [37:03&lt;00:00,  1.48s/it] 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh hasil preprocessing:
+                                               judul  \
+0  Airlangga Harap Kenaikan UMP Tingkatkan Daya B...   
+1  PT SIER Beri Penghargaan untuk 50 Tenant Terba...   
+2  Prabowo Bakal Bentuk Kementerian Penerimaan Ne...   
+3  Sinergi Kemenag &amp; BPJS Ketenagakerjaan Lindung...   
+4  Pemerintah Segera Bentuk Satgas PHK Usai Tetap...   
+
+                                          text_clean kategori  
+0  menteri koordinator menko bidang ekonomi airla...  Ekonomi  
+1  rangka riah surabaya industrial estate rungkut...  Ekonomi  
+2  wacana presiden prabowo subianto bentuk bentuk...  Ekonomi  
+3  bpjs ketenagakerjaan menteri agama kemenag lin...  Ekonomi  
+4  perintah bentuk satu tugas putus hubung kerja ...  Ekonomi  
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">OSError</span><span class="g g-Whitespace">                                   </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">31</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contoh hasil preprocessing:&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;judul&#39;</span><span class="p">,</span> <span class="s1">&#39;text_clean&#39;</span><span class="p">,</span> <span class="s1">&#39;kategori&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="ne">---&gt; </span><span class="mi">31</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;/content/Berita_preprocessed.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ File hasil disimpan sebagai: Berita_preprocessed.csv&quot;</span><span class="p">)</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\util\_decorators.py:333,</span> in <span class="ni">deprecate_nonkeyword_arguments.&lt;locals&gt;.decorate.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">327</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_allow_args</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">329</span>         <span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="n">_format_argument_list</span><span class="p">(</span><span class="n">allow_args</span><span class="p">)),</span>
+<span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="ne">FutureWarning</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">331</span>         <span class="n">stacklevel</span><span class="o">=</span><span class="n">find_stack_level</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">332</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">333</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\generic.py:3986,</span> in <span class="ni">NDFrame.to_csv</span><span class="nt">(self, path_or_buf, sep, na_rep, float_format, columns, header, index, index_label, mode, encoding, compression, quoting, quotechar, lineterminator, chunksize, date_format, doublequote, escapechar, decimal, errors, storage_options)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3975</span> <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ABCDataFrame</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">3977</span> <span class="n">formatter</span> <span class="o">=</span> <span class="n">DataFrameFormatter</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3978</span>     <span class="n">frame</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3979</span>     <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">3983</span>     <span class="n">decimal</span><span class="o">=</span><span class="n">decimal</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3984</span> <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3986</span> <span class="k">return</span> <span class="n">DataFrameRenderer</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3987</span>     <span class="n">path_or_buf</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3988</span>     <span class="n">lineterminator</span><span class="o">=</span><span class="n">lineterminator</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3989</span>     <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3990</span>     <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3991</span>     <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3992</span>     <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3993</span>     <span class="n">quoting</span><span class="o">=</span><span class="n">quoting</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3994</span>     <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3995</span>     <span class="n">index_label</span><span class="o">=</span><span class="n">index_label</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3996</span>     <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3997</span>     <span class="n">chunksize</span><span class="o">=</span><span class="n">chunksize</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3998</span>     <span class="n">quotechar</span><span class="o">=</span><span class="n">quotechar</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3999</span>     <span class="n">date_format</span><span class="o">=</span><span class="n">date_format</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4000</span>     <span class="n">doublequote</span><span class="o">=</span><span class="n">doublequote</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4001</span>     <span class="n">escapechar</span><span class="o">=</span><span class="n">escapechar</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4002</span>     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4003</span> <span class="p">)</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\formats\format.py:1014,</span> in <span class="ni">DataFrameRenderer.to_csv</span><span class="nt">(self, path_or_buf, encoding, sep, columns, index_label, mode, compression, quoting, quotechar, lineterminator, chunksize, date_format, doublequote, escapechar, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">993</span>     <span class="n">created_buffer</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">995</span> <span class="n">csv_formatter</span> <span class="o">=</span> <span class="n">CSVFormatter</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">996</span>     <span class="n">path_or_buf</span><span class="o">=</span><span class="n">path_or_buf</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">997</span>     <span class="n">lineterminator</span><span class="o">=</span><span class="n">lineterminator</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1012</span>     <span class="n">formatter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fmt</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1014</span> <span class="n">csv_formatter</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1016</span> <span class="k">if</span> <span class="n">created_buffer</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1017</span>     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path_or_buf</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">)</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\formats\csvs.py:251,</span> in <span class="ni">CSVFormatter.save</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span><span class="sd"> Create the writer &amp; save.</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="c1"># apply compression and byte/text conversion</span>
+<span class="ne">--&gt; </span><span class="mi">251</span> <span class="k">with</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>     <span class="bp">self</span><span class="o">.</span><span class="n">filepath_or_buffer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="p">)</span> <span class="k">as</span> <span class="n">handles</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span>     <span class="c1"># Note: self.encoding is irrelevant here</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csvlib</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="n">handles</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="n">lineterminator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lineterminator</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">267</span>         <span class="n">quotechar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quotechar</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">268</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">()</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py:749,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">747</span> <span class="c1"># Only for write methods</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span> <span class="k">if</span> <span class="s2">&quot;r&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span> <span class="ow">and</span> <span class="n">is_path</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">749</span>     <span class="n">check_parent_directory</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">handle</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">751</span> <span class="k">if</span> <span class="n">compression</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">752</span>     <span class="k">if</span> <span class="n">compression</span> <span class="o">!=</span> <span class="s2">&quot;zstd&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">753</span>         <span class="c1"># compression libraries do not like an explicit text-mode</span>
+
+<span class="nn">File c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py:616,</span> in <span class="ni">check_parent_directory</span><span class="nt">(path)</span>
+<span class="g g-Whitespace">    </span><span class="mi">614</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+<span class="g g-Whitespace">    </span><span class="mi">615</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+<span class="ne">--&gt; </span><span class="mi">616</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;Cannot save file into a non-existent directory: &#39;</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+<span class="ne">OSError</span>: Cannot save file into a non-existent directory: &#39;\content&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Berita_preprocessed.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ File hasil disimpan sebagai: Berita_preprocessed.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ File hasil disimpan sebagai: Berita_preprocessed.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  Load data hasil preprocessing</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Berita_preprocessed.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">)</span>
+
+<span class="c1">#  Vektorisasi teks untuk LDA</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">max_df</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stop_words</span><span class="o">=</span><span class="n">stop_words</span><span class="p">)</span>
+<span class="n">X_counts</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;text_clean&#39;</span><span class="p">])</span>
+
+<span class="c1"># Latent Dirichlet Allocation (LDA)</span>
+<span class="n">n_topics</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">lda</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_topics</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_counts</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> LDA selesai - menghasilkan </span><span class="si">{</span><span class="n">n_topics</span><span class="si">}</span><span class="s2"> topik.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Split data latih &amp; uji</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_topics</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Model 1: Naive Bayes</span>
+<span class="n">nb_model</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+<span class="n">nb_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_nb</span> <span class="o">=</span> <span class="n">nb_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Model 2: SVM</span>
+<span class="n">svm_model</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">svm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_svm</span> <span class="o">=</span> <span class="n">svm_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Evaluasi performa</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">prec</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">rec</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;Model&#39;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span> <span class="s1">&#39;Akurasi&#39;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span> <span class="s1">&#39;Presisi&#39;</span><span class="p">:</span> <span class="n">prec</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">rec</span><span class="p">,</span> <span class="s1">&#39;F1-Score&#39;</span><span class="p">:</span> <span class="n">f1</span><span class="p">}</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_nb</span><span class="p">,</span> <span class="s2">&quot;Naive Bayes&quot;</span><span class="p">))</span>
+<span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_svm</span><span class="p">,</span> <span class="s2">&quot;SVM&quot;</span><span class="p">))</span>
+
+<span class="c1"># 10️⃣ Tampilkan hasil evaluasi dalam tabel</span>
+<span class="n">eval_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Evaluasi Model:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eval_df</span><span class="p">)</span>
+
+<span class="c1"># 11️⃣ Visualisasi perbandingan performa</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">eval_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)[[</span><span class="s1">&#39;Akurasi&#39;</span><span class="p">,</span><span class="s1">&#39;Presisi&#39;</span><span class="p">,</span><span class="s1">&#39;Recall&#39;</span><span class="p">,</span><span class="s1">&#39;F1-Score&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perbandingan Performa Model (LDA Features)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Skor&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 12️⃣ (Opsional) Tampilkan topik LDA</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_topics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">no_top_words</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">components_</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topik </span><span class="si">{</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">feature_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topic</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[:</span><span class="o">-</span><span class="n">no_top_words</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🧩 Daftar topik utama (kata-kata dominan):&quot;</span><span class="p">)</span>
+<span class="n">display_topics</span><span class="p">(</span><span class="n">lda</span><span class="p">,</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data: 1500
+   No                                              judul  \
+0   1  Airlangga Harap Kenaikan UMP Tingkatkan Daya B...   
+1   2  PT SIER Beri Penghargaan untuk 50 Tenant Terba...   
+2   3  Prabowo Bakal Bentuk Kementerian Penerimaan Ne...   
+3   4  Sinergi Kemenag &amp; BPJS Ketenagakerjaan Lindung...   
+4   5  Pemerintah Segera Bentuk Satgas PHK Usai Tetap...   
+
+                                              berita  \
+0  Menteri Koordinator (Menko) Bidang Perekonomia...   
+1  Dalam rangka memeriahkan hari jadi ke-50, PT S...   
+2  Wacana Presiden Prabowo Subianto akan membentu...   
+3  BPJS Ketenagakerjaan dan Kementerian Agama (Ke...   
+4  Pemerintah akan segera membentuk Satuan Tugas ...   
+
+                         tanggal kategori  \
+0  Minggu, 01 Des 2024 23:40 WIB  Ekonomi   
+1  Minggu, 01 Des 2024 20:45 WIB  Ekonomi   
+2  Minggu, 01 Des 2024 19:40 WIB  Ekonomi   
+3  Minggu, 01 Des 2024 19:03 WIB  Ekonomi   
+4  Minggu, 01 Des 2024 19:00 WIB  Ekonomi   
+
+                                                link  \
+0  https://www.cnnindonesia.com/ekonomi/202412012...   
+1  https://www.cnnindonesia.com/ekonomi/202412012...   
+2  https://www.cnnindonesia.com/ekonomi/202412011...   
+3  https://www.cnnindonesia.com/ekonomi/202412011...   
+4  https://www.cnnindonesia.com/ekonomi/202412011...   
+
+                                          text_clean  
+0  menteri koordinator menko bidang ekonomi airla...  
+1  rangka riah surabaya industrial estate rungkut...  
+2  wacana presiden prabowo subianto bentuk bentuk...  
+3  bpjs ketenagakerjaan menteri agama kemenag lin...  
+4  perintah bentuk satu tugas putus hubung kerja ...  
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\Mukti Hendra\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\feature_extraction\text.py:402: UserWarning: Your stop_words may be inconsistent with your preprocessing. Tokenizing the stop words generated tokens [&#39;baiknya&#39;, &#39;berkali&#39;, &#39;kali&#39;, &#39;kurangnya&#39;, &#39;mata&#39;, &#39;olah&#39;, &#39;sekurang&#39;, &#39;setidak&#39;, &#39;tama&#39;, &#39;tidaknya&#39;] not in stop_words.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> LDA selesai - menghasilkan 10 topik.
+
+ Evaluasi Model:
+         Model   Akurasi   Presisi    Recall  F1-Score
+0  Naive Bayes  0.913333  0.923535  0.913333  0.910695
+1          SVM  0.900000  0.913634  0.900000  0.895848
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 800x500 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="_images/199767411bfba5d408243379fd8ba775c36b146a611f800b5b622812f0ebcc66.png" src="_images/199767411bfba5d408243379fd8ba775c36b146a611f800b5b622812f0ebcc66.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🧩 Daftar topik utama (kata-kata dominan):
+Topik 1:
+presiden trump yoon negara militer perintah serang suriah anggota rusia
+
+Topik 2:
+laut pagar tangerang menteri milik nelayan kkp bangun misterius ikan
+
+Topik 3:
+pangan tani beras milik laku kembang produksi hasil lpg jakarta
+
+Topik 4:
+bakar los orang pesawat angeles api air lapor korban wilayah
+
+Topik 5:
+prabowo kerja menteri perintah presiden indonesia ekonomi program anggar negara
+
+Topik 6:
+main indonesia timnas piala latih gol menit menang laga tanding
+
+Topik 7:
+makan gizi program mbg gratis suara jakarta jabat terima haji
+
+Topik 8:
+israel senjata gencat gaza indonesia hamas palestina sepakat bebas sandera
+
+Topik 9:
+duga kpk korban jalan banjir sangka warga polisi periksa orang
+
+Topik 10:
+persen harga ppn pajak indonesia minyak tarif menteri perintah uang
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># ============================================================</span>
+<span class="c1"># 🔹 PROPORSI TOPIK DALAM DOKUMEN</span>
+<span class="c1"># ============================================================</span>
+<span class="n">doc_topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_topics</span><span class="p">,</span> 
+                            <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Topik_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)])</span>
+<span class="n">doc_topic_df</span><span class="p">[</span><span class="s2">&quot;Kategori&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;kategori&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📄 Proporsi Topik dalam Setiap Dokumen (Document-Topic Distribution):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">doc_topic_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Simpan ke file CSV (opsional)</span>
+<span class="n">doc_topic_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Proporsi_Topik_Dalam_Dokumen.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Disimpan ke: Proporsi_Topik_Dalam_Dokumen.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># ============================================================</span>
+<span class="c1"># 🔹 PROPORSI KATA DALAM TOPIK</span>
+<span class="c1"># ============================================================</span>
+<span class="n">topic_word</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">components_</span> <span class="o">/</span> <span class="n">lda</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+
+<span class="n">topic_word_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">topic_word</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> 
+                             <span class="n">index</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> 
+                             <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Topik_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🧩 Proporsi Kata dalam Tiap Topik (Topic-Word Distribution):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">topic_word_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># tampilkan 10 kata pertama</span>
+
+<span class="c1"># Simpan ke file CSV (opsional)</span>
+<span class="n">topic_word_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;Proporsi_Kata_Dalam_Topik.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Disimpan ke: Proporsi_Kata_Dalam_Topik.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📄 Proporsi Topik dalam Setiap Dokumen (Document-Topic Distribution):
+    Topik_1   Topik_2   Topik_3   Topik_4   Topik_5   Topik_6   Topik_7  \
+0  0.000337  0.000337  0.008592  0.130761  0.405655  0.000337  0.000337   
+1  0.000281  0.000281  0.573253  0.000281  0.346295  0.000281  0.000281   
+2  0.000335  0.000335  0.000335  0.000335  0.505755  0.000335  0.046971   
+3  0.000457  0.000457  0.012562  0.000457  0.851956  0.000457  0.043255   
+4  0.000422  0.000422  0.203044  0.000422  0.581054  0.000422  0.000422   
+
+    Topik_8   Topik_9  Topik_10  Topik_11  Topik_12  Topik_13  Topik_14  \
+0  0.000337  0.000337  0.435028  0.016597  0.000337  0.000337  0.000337   
+1  0.000281  0.000281  0.077076  0.000281  0.000281  0.000281  0.000281   
+2  0.234710  0.000335  0.141094  0.000335  0.040926  0.000335  0.000335   
+3  0.087204  0.000457  0.000457  0.000457  0.000457  0.000457  0.000457   
+4  0.022055  0.000422  0.157107  0.032521  0.000422  0.000422  0.000422   
+
+   Topik_15 Kategori  
+0  0.000337  Ekonomi  
+1  0.000281  Ekonomi  
+2  0.027528  Ekonomi  
+3  0.000457  Ekonomi  
+4  0.000422  Ekonomi  
+✅ Disimpan ke: Proporsi_Topik_Dalam_Dokumen.csv
+
+🧩 Proporsi Kata dalam Tiap Topik (Topic-Word Distribution):
+        Topik_1   Topik_2   Topik_3   Topik_4   Topik_5   Topik_6   Topik_7  \
+aan    0.000005  0.000003  0.000007  0.000005  0.000003  0.000003  0.000006   
+aaron  0.000005  0.000003  0.000007  0.000005  0.000003  0.000003  0.000006   
+abad   0.000005  0.000003  0.000112  0.000005  0.000003  0.000003  0.000006   
+abadi  0.000005  0.000003  0.000007  0.000005  0.000003  0.000050  0.000006   
+abai   0.000178  0.000003  0.000007  0.000005  0.000003  0.000003  0.000006   
+abang  0.000005  0.000003  0.000007  0.000005  0.000003  0.000003  0.000006   
+abar   0.000005  0.000003  0.000007  0.000005  0.000047  0.000054  0.000006   
+abbas  0.000005  0.000003  0.000007  0.000005  0.000049  0.000003  0.000006   
+abc    0.000005  0.000003  0.000007  0.000005  0.000003  0.000003  0.000006   
+abdel  0.000005  0.000003  0.000007  0.000005  0.000003  0.000189  0.000006   
+
+        Topik_8   Topik_9  Topik_10  Topik_11  Topik_12  Topik_13  Topik_14  \
+aan    0.000006  0.000002  0.000243  0.000004  0.000004  0.000006  0.000002   
+aaron  0.000006  0.000002  0.000003  0.000131  0.000004  0.000006  0.000002   
+abad   0.000100  0.000002  0.000003  0.000048  0.000076  0.000006  0.000002   
+abadi  0.000006  0.000106  0.000003  0.000067  0.000004  0.000006  0.000002   
+abai   0.000006  0.000037  0.000003  0.000004  0.000004  0.000006  0.000133   
+abang  0.000006  0.000140  0.000003  0.000004  0.000004  0.000006  0.000002   
+abar   0.000091  0.000002  0.000003  0.000004  0.000004  0.000006  0.000002   
+abbas  0.000006  0.000278  0.000003  0.000004  0.000004  0.000006  0.000288   
+abc    0.000006  0.000002  0.000003  0.000004  0.000004  0.000104  0.000002   
+abdel  0.000006  0.000002  0.000003  0.000004  0.000004  0.000006  0.000253   
+
+       Topik_15  
+aan    0.000003  
+aaron  0.000003  
+abad   0.000003  
+abadi  0.000207  
+abai   0.000362  
+abang  0.000055  
+abar   0.000105  
+abbas  0.000003  
+abc    0.000156  
+abdel  0.000003  
+✅ Disimpan ke: Proporsi_Kata_Dalam_Topik.csv
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="LDA-scit.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">LDA - Scikit-learn</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Clustering_email.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Clustering data email</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mukti Hendra Buana 22-071
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

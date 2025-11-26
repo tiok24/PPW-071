@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TF-IDF &amp; Word Embedding berita &#8212; PPW</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'berita';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LDA - Scikit-learn" href="LDA-scit.html" />
+    <link rel="prev" title="Preprocessing Berita &amp; PTA" href="preprocessing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/profile.jpeg" class="logo__image only-light" alt="PPW - Home"/>
+    <script>document.write(`<img src="_static/profile.jpeg" class="logo__image only-dark" alt="PPW - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Profil
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tugas.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_menu.html">Crawling Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawling_PTA.html">Crawling PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawl_link.html">Crawl Link</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="crawling_berita.html">Crawling Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing Berita &amp; PTA</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TF-IDF &amp; Word Embedding berita</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="LDA-scit.html">LDA - Scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="klasifikasi_berita.html">Klasifikasi berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering_email.html">Clustering data email</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerank.html">Page rank</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_usage.html">Web Usage Mining</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fberita.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/berita.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TF-IDF & Word Embedding berita</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TF-IDF &amp; Word Embedding berita</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-tf-idf-dan-word-embedding">perbandingan TF-IDF dan Word embedding</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tf-idf-word-embedding-berita">
+<h1>TF-IDF &amp; Word Embedding berita<a class="headerlink" href="#tf-idf-word-embedding-berita" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="c1"># Baca file hasil preprocessing sebelumnya</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;hasil_preprocessing_ringkasan.csv&quot;</span><span class="p">)</span>
+
+
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;processed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">corpus</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+
+
+<span class="c1"># Inisialisasi vectorizer</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+
+<span class="c1"># Fit dan transform</span>
+<span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+
+<span class="c1"># Konversi hasil TF-IDF ke DataFrame</span>
+<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># Tambahkan index dokumen (misalnya judul)</span>
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Judul&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Judul&quot;</span><span class="p">])</span>
+
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Judul</th>
+      <th>abadi</th>
+      <th>abdullah</th>
+      <th>absah</th>
+      <th>absen</th>
+      <th>acara</th>
+      <th>ada</th>
+      <th>ade</th>
+      <th>adil</th>
+      <th>aditya</th>
+      <th>...</th>
+      <th>wilayahwilayah</th>
+      <th>wuk</th>
+      <th>yakin</th>
+      <th>year</th>
+      <th>york</th>
+      <th>yudha</th>
+      <th>yudhi</th>
+      <th>yusin</th>
+      <th>yusri</th>
+      <th>yusuf</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Prabowo di Sidang Umum PBB: Indonesia Siap Kir...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.313455</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Di Sidang Umum PBB, Prabowo Kembali Tegaskan D...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ini Alasan Jokowi Rajin Bagikan Sembako ke War...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Di Rakornas Posyandu 2025, Tri Tito Tekankan P...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Menkeu Purbaya Blak-blakan Ketua Banggar DPR T...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.201617</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 1264 columns</p>
+</div></div></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="word-embedding">
+<h1>word embedding<a class="headerlink" href="#word-embedding" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Baca hasil preprocessing ringkasan</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;hasil_preprocessing_ringkasan.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ambil kolom processed sebagai corpus</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;processed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah dokumen:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># preview 3 dokumen pertama</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah dokumen: 209
+[&quot;[&#39;presiden&#39;, &#39;prabowo&#39;, &#39;subianto&#39;, &#39;tekan&#39;, &#39;indonesia&#39;, &#39;kirim&#39;, &#39;pasu&#39;, &#39;jaga&#39;, &#39;damai&#39;, &#39;wilayahwilayah&#39;, &#39;konflik&#39;, &#39;gaza&#39;, &#39;ukraina&#39;, &#39;sudan&#39;, &#39;libya&#39;]&quot;, &quot;[&#39;presiden&#39;, &#39;prabowo&#39;, &#39;subianto&#39;, &#39;sikap&#39;, &#39;indonesia&#39;, &#39;konsisten&#39;, &#39;dukung&#39;, &#39;solusi&#39;, &#39;negara&#39;, &#39;twostate&#39;, &#39;solution&#39;, &#39;daulat&#39;, &#39;palestina&#39;]&quot;, &quot;[&#39;presiden&#39;, &#39;ri&#39;, &#39;joko&#39;, &#39;widodo&#39;, &#39;jokowi&#39;, &#39;kian&#39;, &#39;rajin&#39;, &#39;bagi&#39;, &#39;paket&#39;, &#39;sembako&#39;, &#39;warga&#39;, &#39;solo&#39;, &#39;giat&#39;, &#39;laku&#39;, &#39;pekan&#39;]&quot;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+
+<span class="c1"># Tokenisasi tiap dokumen</span>
+<span class="n">tokenized_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">]</span>
+
+<span class="c1"># Cek hasil tokenization</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contoh tokenization dokumen pertama:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenized_corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">20</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh tokenization dokumen pertama:
+[&#39;presiden&#39;, &#39;prabowo&#39;, &#39;subianto&#39;, &#39;tekan&#39;, &#39;indonesia&#39;, &#39;kirim&#39;, &#39;pasu&#39;, &#39;jaga&#39;, &#39;damai&#39;, &#39;wilayahwilayah&#39;, &#39;konflik&#39;, &#39;gaza&#39;, &#39;ukraina&#39;, &#39;sudan&#39;, &#39;libya&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
+
+<span class="c1"># Training model Word2Vec (CBOW -&gt; sg=0)</span>
+<span class="n">model_cbow</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
+    <span class="n">sentences</span><span class="o">=</span><span class="n">tokenized_corpus</span><span class="p">,</span>
+    <span class="n">vector_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>  <span class="c1"># ukuran embedding</span>
+    <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">min_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>      <span class="c1"># kata yang muncul &lt;2 kali akan diabaikan</span>
+    <span class="n">sg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>             <span class="c1"># 0 = CBOW, 1 = Skip-gram</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+
+<span class="c1"># Simpan model</span>
+<span class="n">model_cbow</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;cbow_ringkasan.model&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model CBOW berhasil dilatih dan disimpan!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model CBOW berhasil dilatih dan disimpan!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ambil embedding untuk kata tertentu</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector untuk kata &#39;indonesia&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_cbow</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;indonesia&#39;</span><span class="p">])</span>
+
+<span class="c1"># Cek kata yang mirip</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Kata mirip &#39;ekonomi&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_cbow</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">&#39;ekonomi&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector untuk kata &#39;indonesia&#39;:
+[-7.7751843e-04  4.5102797e-03 -6.5237018e-03 -1.6364038e-03
+  7.7716489e-03  5.8588032e-03 -3.1252445e-03  4.5460803e-03
+ -9.2098713e-03  5.7600006e-03 -5.4606502e-03 -4.6886434e-03
+  9.5550483e-03  1.2219842e-03  8.0121178e-03 -6.8592657e-03
+  5.2840640e-03  8.5538793e-03 -8.4667047e-03 -7.5197248e-03
+ -7.0148595e-03 -4.3216925e-03 -3.5749422e-03 -8.9568645e-03
+  7.5270063e-03 -4.6224464e-03  7.7084475e-03  4.1202470e-03
+ -7.6290900e-03  4.3719439e-03  6.6741616e-03 -6.6087074e-03
+ -6.5913410e-03 -3.0367854e-03 -9.4733275e-03 -2.8200183e-04
+ -4.1188719e-04  2.4512238e-03  1.2925481e-03 -3.1242224e-03
+ -5.2756811e-03  6.7840354e-04 -1.5181256e-03  6.4457036e-03
+  5.3477450e-03  3.9604246e-03  7.7300495e-04 -2.8863202e-03
+ -3.8138197e-03 -8.5075205e-04  1.9860447e-03 -3.8960015e-03
+ -7.0368461e-03 -8.0456650e-03 -9.9964831e-03 -5.0118067e-03
+ -1.6409177e-03 -4.5974916e-03 -7.8608645e-03 -3.9151828e-03
+  4.6063862e-03 -3.1815304e-03  8.1900209e-03  9.1640104e-04
+ -9.0842815e-03  1.0038758e-02  8.7414337e-03  6.1505414e-03
+ -8.4369555e-03  7.7377600e-03  2.8687378e-03  5.7116151e-03
+  4.8483382e-03  1.9300666e-03 -2.2478651e-03  9.2999199e-03
+  9.9295201e-03  2.9935092e-03 -3.8565728e-03  1.0000666e-03
+  9.7398716e-04 -9.1852332e-03 -9.6231950e-03  1.3858564e-03
+  4.6585334e-04 -5.5907266e-03 -5.1787049e-03 -5.8408226e-03
+  1.0023806e-02  7.2970061e-06 -2.4454575e-03  6.7012794e-03
+  9.4207479e-03 -3.3573040e-03  1.0070891e-02  6.6819908e-03
+  6.4083138e-03 -3.1102056e-04  9.0882285e-03 -7.0131714e-03]
+
+Kata mirip &#39;ekonomi&#39;:
+[(&#39;milik&#39;, 0.3378189206123352), (&#39;undang&#39;, 0.26218757033348083), (&#39;insiden&#39;, 0.25866007804870605), (&#39;abadi&#39;, 0.2516672611236572), (&#39;anggar&#39;, 0.23128041625022888), (&#39;inisial&#39;, 0.2303396612405777), (&#39;lula&#39;, 0.21460844576358795), (&#39;jogja&#39;, 0.21334101259708405), (&#39;periode&#39;, 0.2107723355293274), (&#39;lahir&#39;, 0.20990827679634094)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="perbandingan-tf-idf-dan-word-embedding">
+<h1>perbandingan TF-IDF dan Word embedding<a class="headerlink" href="#perbandingan-tf-idf-dan-word-embedding" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data hasil preprocessing</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;hasil_preprocessing_ringkasan.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Pastikan ada label untuk klasifikasi</span>
+<span class="c1"># Ambil text &amp; label</span>
+<span class="n">X_text</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;processed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Kategori&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Judul&quot;</span><span class="p">,</span> <span class="s2">&quot;Kategori&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data: 209
+                                               Judul   Kategori
+0  Prabowo di Sidang Umum PBB: Indonesia Siap Kir...  Peristiwa
+1  Di Sidang Umum PBB, Prabowo Kembali Tegaskan D...  Peristiwa
+2  Ini Alasan Jokowi Rajin Bagikan Sembako ke War...  Peristiwa
+3  Di Rakornas Posyandu 2025, Tri Tito Tekankan P...       News
+4  Menkeu Purbaya Blak-blakan Ketua Banggar DPR T...       News
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="c1"># TF-IDF Vectorizer</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_text</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape TF-IDF:&quot;</span><span class="p">,</span> <span class="n">X_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape TF-IDF: (209, 1263)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Tokenisasi</span>
+<span class="n">tokenized</span> <span class="o">=</span> <span class="p">[</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">X_text</span><span class="p">]</span>
+
+<span class="c1"># Training model Word2Vec CBOW</span>
+<span class="n">model_cbow</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
+    <span class="n">sentences</span><span class="o">=</span><span class="n">tokenized</span><span class="p">,</span>
+    <span class="n">vector_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">min_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">sg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>   <span class="c1"># CBOW</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+
+<span class="c1"># Fungsi untuk dapatkan rata-rata embedding per dokumen</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_avg_vector</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">vector_size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vector_size</span><span class="p">)</span>
+
+<span class="n">X_w2v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">get_avg_vector</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">model_cbow</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tokenized</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape Word2Vec:&quot;</span><span class="p">,</span> <span class="n">X_w2v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape Word2Vec: (209, 100)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Bagi data train/test</span>
+<span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">X_test_tfidf</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_tfidf</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">X_train_w2v</span><span class="p">,</span> <span class="n">X_test_w2v</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_w2v</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test size :&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Train size: 167
+Test size : 42
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Bagi data train/test</span>
+<span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">X_test_tfidf</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_tfidf</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">X_train_w2v</span><span class="p">,</span> <span class="n">X_test_w2v</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_w2v</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test size :&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Train size: 167
+Test size : 42
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Softmax untuk TF-IDF</span>
+<span class="n">clf_tfidf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">clf_tfidf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_tfidf</span> <span class="o">=</span> <span class="n">clf_tfidf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_tfidf</span><span class="p">)</span>
+
+<span class="c1"># Softmax untuk Word2Vec</span>
+<span class="n">clf_w2v</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">clf_w2v</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_w2v</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_w2v</span> <span class="o">=</span> <span class="n">clf_w2v</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_w2v</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Hasil Klasifikasi TF-IDF ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_tfidf</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_tfidf</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Hasil Klasifikasi Word2Vec (CBOW) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_w2v</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_w2v</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Hasil Klasifikasi TF-IDF ===
+Akurasi: 0.7380952380952381
+              precision    recall  f1-score   support
+
+  Infografis       0.00      0.00      0.00         1
+ Megapolitan       0.00      0.00      0.00         1
+        News       1.00      0.20      0.33         5
+   Peristiwa       0.73      1.00      0.85        30
+     Politik       0.00      0.00      0.00         5
+
+    accuracy                           0.74        42
+   macro avg       0.35      0.24      0.24        42
+weighted avg       0.64      0.74      0.64        42
+
+
+=== Hasil Klasifikasi Word2Vec (CBOW) ===
+Akurasi: 0.7142857142857143
+              precision    recall  f1-score   support
+
+  Infografis       0.00      0.00      0.00         1
+ Megapolitan       0.00      0.00      0.00         1
+        News       0.00      0.00      0.00         5
+   Peristiwa       0.71      1.00      0.83        30
+     Politik       0.00      0.00      0.00         5
+
+    accuracy                           0.71        42
+   macro avg       0.14      0.20      0.17        42
+weighted avg       0.51      0.71      0.60        42
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="preprocessing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Preprocessing Berita &amp; PTA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="LDA-scit.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">LDA - Scikit-learn</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">TF-IDF &amp; Word Embedding berita</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-tf-idf-dan-word-embedding">perbandingan TF-IDF dan Word embedding</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mukti Hendra Buana 22-071
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
